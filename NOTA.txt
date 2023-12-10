@@ -1,0 +1,1 @@
+El programa se ejecuta con el archivo (Inicio.py)
