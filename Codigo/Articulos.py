@@ -288,14 +288,14 @@ class Articulos:
         return False
 
     # Metodo para verificar si el articulo existe y actualizar la cantidad de articulos
-    def verificar_y_actualizar_articulo(self, articulo, cantidad):
+    def verificar_y_actualizar_articulo(self, cod_articulo, cantidad):
         for item in self.tabla_a.get_children():
             # Colca los datos de cada fila en una lista
             datos = self.tabla_a.item(item)["values"]
 
             print("Datos Articulos: ", datos)  # Imprime la lista obtenida
 
-            if datos[2] == articulo:  # Si el artículo existe
+            if str(datos[0]) == cod_articulo:  # Si el artículo existe
                 nueva_cantidad = datos[3] - cantidad  # Le resta la cantidad ingresada
                 if nueva_cantidad < 0:
                     messagebox.showwarning(
@@ -308,7 +308,7 @@ class Articulos:
                 # Al precio unitario le multiplica la cantidad ingresada
                 precio_unitario = datos[4]
                 total = precio_unitario * cantidad
-
+                nom_articulo = datos[2]
                 # Agrega los nuevos datos a la tabla
                 self.tabla_a.item(
                     item,
@@ -322,7 +322,7 @@ class Articulos:
                     ),
                 )
                 self.guardar_datos()
-                return total, precio_unitario
+                return total, precio_unitario, nom_articulo
 
         messagebox.showwarning("Advertencia", "El artículo no existe")
 

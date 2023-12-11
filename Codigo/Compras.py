@@ -51,7 +51,7 @@ class Compras:
         direccion = tk.Label(campos, text="Dirección", font=self.fuente_texto)
         direccion.grid(row=0, column=3)
 
-        articulo = tk.Label(campos, text="Artículo", font=self.fuente_texto)
+        articulo = tk.Label(campos, text="Cod. Artículo", font=self.fuente_texto)
         articulo.grid(row=2, column=0)
 
         cantidad = tk.Label(campos, text="Cantidad", font=self.fuente_texto)
@@ -89,7 +89,9 @@ class Compras:
         self.direccion_entry = tk.Entry(campos)
         self.direccion_entry.grid(row=1, column=3, padx=5, pady=5)
 
-        self.cod_articulo_entry = tk.Entry(campos)
+        self.cod_articulo_entry = tk.Entry(
+            campos, validate="key", validatecommand=(numeros, "%S")
+        )
         self.cod_articulo_entry.grid(row=3, column=0, padx=5, pady=5)
 
         self.cantidad_entry = tk.Entry(
@@ -330,7 +332,7 @@ class Compras:
             return None, None, None, None, None
 
     def obtener_datos_articulo(self):
-        articulo = self.cod_articulo_entry.get()
+        cod_articulo = self.cod_articulo_entry.get()
         try:
             cantidad = int(self.cantidad_entry.get())
             if cantidad < 0:
@@ -338,7 +340,7 @@ class Compras:
         except ValueError:
             messagebox.showwarning("Advertencia", "Ingrese una cantidad válida.")
             return None, None
-        return articulo, cantidad
+        return cod_articulo, cantidad
 
     # Metodo para enviar los datos de los clientes obtenidos a su respectiva tabla
     def enviar_datos_a_clientes(self):
@@ -347,7 +349,7 @@ class Compras:
         if None in (nit, nombre, telefono, empleado):
             return
 
-        articulo, cantidad = self.obtener_datos_articulo()
+        cod_articulo, cantidad = self.obtener_datos_articulo()
 
         nombres_empleados = [str(nom) for nom in self.cargar_nombre_empleados()]
         print(f"Nombres empleados: {nombres_empleados}")
@@ -375,11 +377,15 @@ class Compras:
 
                 ventana_clientes.destroy()
 
-        if articulo and cantidad is not None:
+        if cod_articulo and cantidad is not None:
             ventana_articulos = tk.Toplevel(self.ventana)
             articulos = Articulos.Articulos(ventana_articulos)
-            total, precio_unitario = articulos.verificar_y_actualizar_articulo(
-                articulo, cantidad
+            (
+                total,
+                precio_unitario,
+                nom_articulo,
+            ) = articulos.verificar_y_actualizar_articulo(
+                cod_articulo, cantidad
             )  # Obtiene el total y el precio unitario
             ventana_articulos.destroy()
 
@@ -388,7 +394,7 @@ class Compras:
                 # Almacenar articulos en el carrito
                 self.carrito_compras.append(
                     {
-                        "articulo": articulo,
+                        "articulo": nom_articulo,
                         "cantidad": cantidad,
                         "precioU": precio_unitario,
                         "total": total,
