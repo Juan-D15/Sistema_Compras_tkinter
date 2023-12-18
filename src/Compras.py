@@ -9,13 +9,13 @@ class Compras:
     def __init__(self, ventana):
         self.ventana = ventana
         self.ventana.title("Compras")
-
-        # Fuentes de texto y urls
+        # Fuentes de texto
         self.fuente_texto = ("Exo 2 Medium", 11)
 
         self.numero_factura = self.cargar_numeros_factura()
         self.carrito_compras = []
 
+        # Definición de atributos
         self.nit_entry = None
         self.nombre_entry = None
         self.telefono_entry = None

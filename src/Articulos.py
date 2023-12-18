@@ -7,9 +7,10 @@ class Articulos:
     def __init__(self, ventana):
         self.ventana = ventana
         self.ventana.title("Artículos")
-        # Fuentes de texto y urls
+        # Fuentes de texto
         self.fuente_texto = ("Exo 2 Medium", 11)
 
+        # Definición de atributos
         self.tabla_a = None
         self.codigo_a_entry = None
         self.codigo_p_entry = None

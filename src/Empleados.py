@@ -8,7 +8,7 @@ class Empleados:
         self.ventana = ventana
         self.ventana.title("Empleados")
 
-        # fuentes de texto
+        # Fuentes de texto
         self.fuente_texto = ("Exo 2 Medium", 11)
 
         # Definición de atributos

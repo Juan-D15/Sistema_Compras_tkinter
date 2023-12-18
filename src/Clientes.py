@@ -7,12 +7,8 @@ class Clientes:
     def __init__(self, ventana):
         self.ventana = ventana
         self.ventana.title("Clientes")
-
-        # Fuentes de texto y urls
+        # Fuentes de texto
         self.fuente_texto = ("Exo 2 Medium", 11)
-        self.url_clientes = (
-            "Sistema_Compras_TK/Archivos guardados/datos_tabla_Clientes.pkl"
-        )
 
         # Definición de atributos
         self.tabla_c = None
