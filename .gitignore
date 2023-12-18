@@ -1,3 +1,7 @@
 Archivos guardados/
 Facturas PDF/
 __pycache__/
+
+#Entorno virtual
+env/
+venv/
