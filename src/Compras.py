@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import pickle
 from fpdf import FPDF
-import Clientes, Articulos, Empleados
+import Clientes, Articulos, Empleados, urls
 
 
 class Compras:
@@ -10,6 +10,7 @@ class Compras:
         self.ventana = ventana
         self.ventana.title("Compras")
 
+        # Fuentes de texto y urls
         self.fuente_texto = ("Exo 2 Medium", 11)
 
         self.numero_factura = self.cargar_numeros_factura()
@@ -174,21 +175,19 @@ class Compras:
     # Carga y guarda los numeros de factura
     def cargar_numeros_factura(self):
         try:
-            with open("Proyecto/Archivos guardados/numeros_factura.pkl", "rb") as file:
+            with open(urls.url_noFactura, "rb") as file:
                 return pickle.load(file)
         except FileNotFoundError:
             return 1
 
     def guardar_numeros_factura(self):
-        with open("Proyecto/Archivos guardados/numeros_factura.pkl", "wb") as file:
+        with open(urls.url_noFactura, "wb") as file:
             pickle.dump(self.numero_factura, file)
 
     # Carga los nombres de los empleados que esten en la tabla
     def cargar_nombre_empleados(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Empleados.pkl", "rb"
-            ) as file:
+            with open(urls.url_empleados, "rb") as file:
                 datos = pickle.load(file)
                 nombres_emp = [dato[1] for dato in datos]
                 return nombres_emp
@@ -197,7 +196,7 @@ class Compras:
 
     # Carga los datos de los clientes que esten en la tabla
     def cargar_datos_clientes(self):
-        with open("Proyecto/Archivos guardados/datos_tabla_Clientes.pkl", "rb") as file:
+        with open(urls.url_clientes, "rb") as file:
             return pickle.load(file)
 
     # Metodo para generar un pdf de la factura

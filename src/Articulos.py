@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import pickle
+import pickle, urls
 
 
 class Articulos:
     def __init__(self, ventana):
         self.ventana = ventana
         self.ventana.title("Artículos")
-        # Fuentes de texto
+        # Fuentes de texto y urls
         self.fuente_texto = ("Exo 2 Medium", 11)
 
         self.tabla_a = None
@@ -144,38 +144,32 @@ class Articulos:
         )
         btn_modificar_P.grid(row=4, column=2, padx=10, pady=10)
 
-    # Metodo para cargar el dato de codigos de la tabla de proveedores
-    def cargar_codigos_proveedores(self):
-        try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Proveedores.pkl", "rb"
-            ) as file:
-                datos = pickle.load(file)
-                codigos_proveedores = [dato[0] for dato in datos]
-                return codigos_proveedores
-        except FileNotFoundError:
-            return []
-
     # Metodos de guardar y cargar datos de la tabla
     def guardar_datos(self):
         datos = [
             self.tabla_a.item(item)["values"] for item in self.tabla_a.get_children()
         ]
-        with open(
-            "Proyecto/Archivos guardados/datos_tabla_Articulos.pkl", "wb"
-        ) as file:
+        with open(urls.url_articulos, "wb") as file:
             pickle.dump(datos, file)
 
     def cargar_datos(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Articulos.pkl", "rb"
-            ) as file:
+            with open(urls.url_articulos, "rb") as file:
                 datos = pickle.load(file)
                 for dato in datos:
                     self.tabla_a.insert("", tk.END, values=dato)
         except FileNotFoundError:
             pass
+
+    # Metodo para cargar el dato de codigos de la tabla de proveedores
+    def cargar_codigos_proveedores(self):
+        try:
+            with open(urls.url_proveedores, "rb") as file:
+                datos = pickle.load(file)
+                codigos_proveedores = [dato[0] for dato in datos]
+                return codigos_proveedores
+        except FileNotFoundError:
+            return []
 
     # Metodo para obtener los datos de la fila seleccionada y los coloca en los campos respectivos
     def fila_seleccionada(self, event):

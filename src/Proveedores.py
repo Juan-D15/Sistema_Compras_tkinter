@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import pickle
+import pickle, urls
 
 
 class Proveedores:
@@ -127,16 +127,12 @@ class Proveedores:
         datos = [
             self.tabla_p.item(item)["values"] for item in self.tabla_p.get_children()
         ]
-        with open(
-            "Proyecto/Archivos guardados/datos_tabla_Proveedores.pkl", "wb"
-        ) as file:
+        with open(urls.url_proveedores, "wb") as file:
             pickle.dump(datos, file)
 
     def cargar_datos(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Proveedores.pkl", "rb"
-            ) as file:
+            with open(urls.url_proveedores, "rb") as file:
                 datos = pickle.load(file)
                 for dato in datos:
                     self.tabla_p.insert("", tk.END, values=dato)

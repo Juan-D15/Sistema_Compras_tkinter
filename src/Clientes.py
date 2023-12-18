@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import pickle
+import pickle, urls
 
 
 class Clientes:
@@ -8,8 +8,11 @@ class Clientes:
         self.ventana = ventana
         self.ventana.title("Clientes")
 
-        # fuentes de texto
+        # Fuentes de texto y urls
         self.fuente_texto = ("Exo 2 Medium", 11)
+        self.url_clientes = (
+            "Sistema_Compras_TK/Archivos guardados/datos_tabla_Clientes.pkl"
+        )
 
         # Definición de atributos
         self.tabla_c = None
@@ -108,14 +111,12 @@ class Clientes:
         datos = [
             self.tabla_c.item(item)["values"] for item in self.tabla_c.get_children()
         ]
-        with open("Proyecto/Archivos guardados/datos_tabla_Clientes.pkl", "wb") as file:
+        with open(urls.url_clientes, "wb") as file:
             pickle.dump(datos, file)
 
     def cargar_datos(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Clientes.pkl", "rb"
-            ) as file:
+            with open(urls.url_clientes, "rb") as file:
                 datos = pickle.load(file)
                 for dato in datos:
                     self.tabla_c.insert("", tk.END, values=dato)
@@ -125,9 +126,7 @@ class Clientes:
     # Metodos para cargar los datos de nit y telefono de los clientes
     def cargar_nit_clientes(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Clientes.pkl", "rb"
-            ) as file:
+            with open(urls.url_clientes, "rb") as file:
                 datos = pickle.load(file)
                 codigos_nits = [dato[0] for dato in datos]
                 return codigos_nits
@@ -136,9 +135,7 @@ class Clientes:
 
     def cargar_telefonos_clientes(self):
         try:
-            with open(
-                "Proyecto/Archivos guardados/datos_tabla_Clientes.pkl", "rb"
-            ) as file:
+            with open(urls.url_clientes, "rb") as file:
                 datos = pickle.load(file)
                 codigos_nits = [dato[2] for dato in datos]
                 return codigos_nits
