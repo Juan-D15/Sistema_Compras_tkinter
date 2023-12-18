@@ -248,7 +248,7 @@ class Compras:
         pdf.cell(col_widths[3], 10, txt=str(self.sub_total), border=1)
 
         # Guardar el PDF
-        pdf.output("Proyecto/Facturas PDF/Factura.pdf")
+        pdf.output("Sistema_Compras_TK/Facturas PDF/Factura.pdf")
 
     # Metodo para generar la factura en el txtArea
     def generar_factura_txtArea(self):
